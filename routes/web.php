@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
@@ -22,3 +23,4 @@ Route::get('/register', [RegisterController::class, 'register'])->name('register
 Route::post('/register',[RegisterController::class,'create'])->name('registerUser');
 Route::get('/login',[LoginController::class,'loginPage'])->name('login');
 Route::post('/login',[LoginController::class,'login'])->name('login.post');
+Route::get('/admin',[DashboardController::class,'dashboard'])->name('dashboard.main');
