@@ -22,7 +22,8 @@ class Handler extends ExceptionHandler
      * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [
-        //
+        \Illuminate\Auth\AuthenticationException::class,
+
     ];
 
     /**
