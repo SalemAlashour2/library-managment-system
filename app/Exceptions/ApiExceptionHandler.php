@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ApiExceptionHandler extends ExceptionHandler
 {
-    // ...
 
     protected function unauthenticated($request, AuthenticationException $exception)
     {
@@ -19,6 +18,4 @@ class ApiExceptionHandler extends ExceptionHandler
 
         return redirect()->guest(route('login'));
     }
-
-    // ...
 }

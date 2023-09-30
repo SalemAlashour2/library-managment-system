@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthorController;
+use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,7 @@ Route::middleware('auth:sanctum')->post('/category/create',[CategoryController::
 
 Route::middleware('auth:sanctum')->get('/author/read', [AuthorController::class, 'read']);
 Route::middleware('auth:sanctum')->post('/author/create', [AuthorController::class, 'create']);
+
+Route::post('/book/create',[BookController::class,'create']);
+Route::get('/book/read',[BookController::class,'read']);
+Route::post('/book/image/upload',[BookController::class,'uploadImageRequest']);
