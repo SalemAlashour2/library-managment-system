@@ -18,19 +18,48 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('/auth')->controller(AuthController::class)->group(function () {
+    Route::post('/login','login');
+    Route::post('/register','register');
+    Route::post('/register/admin','registerAdmin');
+    Route::post('/login/admin','loginAdmin');
 });
 
-Route::post('/auth/login',[AuthController::class,'login']);
-Route::post('/auth/register',[AuthController::class,'register']);
+Route::prefix('category')->controller(CategoryController::class)->group(function () {
+    
+    Route::get('read','read');
+    Route::get('find','find');
 
-Route::middleware('auth:sanctum')->get('/category/read',[CategoryController::class,'read']);
-Route::middleware('auth:sanctum')->post('/category/create',[CategoryController::class,'create']);
+    Route::middleware('auth:sanctum','abilities:category-create,category-update,category-delete')->group(function(){
+        Route::post('create','create');
+        Route::put('update','update');
+    });
+});
 
-Route::middleware('auth:sanctum')->get('/author/read', [AuthorController::class, 'read']);
-Route::middleware('auth:sanctum')->post('/author/create', [AuthorController::class, 'create']);
 
-Route::post('/book/create',[BookController::class,'create']);
-Route::get('/book/read',[BookController::class,'read']);
-Route::post('/book/image/upload',[BookController::class,'uploadImageRequest']);
+
+Route::prefix('author')->controller(AuthorController::class)->group(function () {
+
+    Route::get('read','read');
+    Route::get('find','find');
+
+    Route::middleware('auth:sanctum','abilities:author-create,author-delete,author-update')->group(function () {
+    Route::post('create','create');
+    Route::put('update','update');
+    });
+    
+});
+
+
+
+Route::prefix('book')->controller(BookController::class)->group(function () {
+
+    Route::get('read','read');
+    Route::get('find','find');
+
+    Route::middleware('auth:sanctum','abilities:book-create,book-update,book-delete')->group(function () {
+    Route::post('create','create');
+    Route::post('update','update');
+    Route::post('upload','uploadImageRequest');
+    });
+});

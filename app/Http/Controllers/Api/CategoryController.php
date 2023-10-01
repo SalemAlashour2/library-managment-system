@@ -38,4 +38,44 @@ class CategoryController extends Controller
 
         return $this->respondWithSuccess($category);
     }
+
+    function find(Request $request): JsonResponse {
+
+        $validator = Validator::make($request->all(), [
+            'category_id' => ['required', 'exists:categories,id']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $category = Category::find($request->input('category_id'));
+
+        return $this->respondWithSuccess($category);
+    }
+
+    function update(Request $request): JsonResponse
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name' => ['max:255'],
+            'category_id' => ['required', 'exists:categories,id']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $category = Category::find($request->input('category_id'));
+
+        if ($request->filled('category_id')) {
+            $category->update(['name' => $request->get('name')]);
+        }
+
+        return $this->respondWithSuccess();
+    }
 }
