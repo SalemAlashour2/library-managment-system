@@ -30,7 +30,7 @@ Route::prefix('category')->controller(CategoryController::class)->group(function
     Route::get('read','read');
     Route::get('find','find');
 
-    Route::middleware('auth:sanctum','abilities:category-create,category-update,category-delete')->group(function(){
+    Route::middleware(['auth:sanctum','abilities:category-create,category-update,category-delete'])->group(function(){
         Route::post('create','create');
         Route::put('update','update');
     });
@@ -43,7 +43,7 @@ Route::prefix('author')->controller(AuthorController::class)->group(function () 
     Route::get('read','read');
     Route::get('find','find');
 
-    Route::middleware('auth:sanctum','abilities:author-create,author-delete,author-update')->group(function () {
+    Route::middleware(['auth:sanctum','abilities:author-create,author-delete,author-update'])->group(function () {
     Route::post('create','create');
     Route::put('update','update');
     });
@@ -57,7 +57,7 @@ Route::prefix('book')->controller(BookController::class)->group(function () {
     Route::get('read','read');
     Route::get('find','find');
 
-    Route::middleware('auth:sanctum','abilities:book-create,book-update,book-delete')->group(function () {
+    Route::middleware(['auth:sanctum','abilities:book-create,book-update,book-delete'])->group(function () {
     Route::post('create','create');
     Route::post('update','update');
     Route::post('upload','uploadImageRequest');

@@ -28,7 +28,7 @@ class AuthController extends Controller
         }
 
         if (Auth::attempt($request->all())) {
-            $token = $request->user()->createToken('user token');
+            $token = $request->user()->createToken('user token',['user']);
 
             return $this->respondWithSuccess([
                 'token' => $token->plainTextToken
