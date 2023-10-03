@@ -78,4 +78,24 @@ class CategoryController extends Controller
 
         return $this->respondWithSuccess();
     }
+
+    function delete(Request $request): JsonResponse
+    {
+
+        $validator = Validator::make($request->all(), [
+            'category_id' => ['required', 'exists:categories,id']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $category = Category::find($request->input('category_id'));
+
+        $category->delete();
+
+        return $this->respondWithSuccess();
+    }
 }

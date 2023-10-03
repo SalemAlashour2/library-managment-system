@@ -89,8 +89,8 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->all())) {
 
-            if ($request->user->hasRole('admin')) {
-                $token = $request->user->createToken('admin-token', [
+            if ($request->user()->hasRole('1')) {
+                $token = $request->user()->createToken('admin-token', [
                     'category-create', 'category-update', 'category-delete', 
                     'author-create', 'author-update', 'author-delete', 'book-create', 'book-update', 'book-delete'
                 ]);

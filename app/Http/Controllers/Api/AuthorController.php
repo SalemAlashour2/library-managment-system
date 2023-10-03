@@ -80,4 +80,23 @@ class AuthorController extends Controller
         return $this->respondWithSuccess();
         
     }
+
+    function delete(Request $request) : JsonResponse {
+        
+        $validator = Validator::make($request->all(), [
+            'author_id' => ['required', 'exists:authors,id']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $author = Author::find($request->input('author_id'));
+
+        $author->delete();
+
+        return $this->respondWithSuccess();
+    }
 }

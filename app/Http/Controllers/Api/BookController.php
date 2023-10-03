@@ -128,6 +128,26 @@ class BookController extends Controller
         return $this->respondWithSuccess();
     }
 
+    function delete(Request $request): JsonResponse
+    {
+
+        $validator = Validator::make($request->all(), [
+            'book_id' => ['required', 'exists:books,id']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $book = Books::find($request->input('book_id'));
+
+        $book->delete();
+
+        return $this->respondWithSuccess();
+    }
+
     function uploadImageRequest(Request $request): JsonResponse
     {
 

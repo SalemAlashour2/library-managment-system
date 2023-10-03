@@ -33,6 +33,7 @@ Route::prefix('category')->controller(CategoryController::class)->group(function
     Route::middleware(['auth:sanctum','abilities:category-create,category-update,category-delete'])->group(function(){
         Route::post('create','create');
         Route::put('update','update');
+        Route::delete('delete','delete');
     });
 });
 
@@ -46,6 +47,7 @@ Route::prefix('author')->controller(AuthorController::class)->group(function () 
     Route::middleware(['auth:sanctum','abilities:author-create,author-delete,author-update'])->group(function () {
     Route::post('create','create');
     Route::put('update','update');
+    Route::delete('delete', 'delete');
     });
     
 });
@@ -61,5 +63,6 @@ Route::prefix('book')->controller(BookController::class)->group(function () {
     Route::post('create','create');
     Route::post('update','update');
     Route::post('upload','uploadImageRequest');
+    Route::delete('delete', 'delete');
     });
 });
