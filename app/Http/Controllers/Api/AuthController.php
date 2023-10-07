@@ -92,7 +92,8 @@ class AuthController extends Controller
             if ($request->user()->hasRole('1')) {
                 $token = $request->user()->createToken('admin-token', [
                     'category-create', 'category-update', 'category-delete', 
-                    'author-create', 'author-update', 'author-delete', 'book-create', 'book-update', 'book-delete'
+                    'author-create', 'author-update', 'author-delete', 'book-create', 'book-update', 'book-delete',
+                    'booking-create', 'booking-read', 'booking-update', 'booking-delete'
                 ]);
                 return $this->respondWithSuccess([
                     'token' => $token->plainTextToken
@@ -134,7 +135,8 @@ class AuthController extends Controller
 
         $user->save();
         $token = $user->createToken('admin-token',['category-create','category-update','category-delete'
-        ,'author-create','author-update','author-delete','book-create','book-update','book-delete']);
+        ,'author-create','author-update','author-delete','book-create','book-update','book-delete','booking-create'
+        ,'booking-read','booking-update','booking-delete']);
 
         return $this->respondCreated([
             'token' => $token->plainTextToken

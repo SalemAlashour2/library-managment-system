@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\AuthorController;
 use App\Http\Controllers\Api\BookController;
+use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -65,4 +66,13 @@ Route::prefix('book')->controller(BookController::class)->group(function () {
     Route::post('upload','uploadImageRequest');
     Route::delete('delete', 'delete');
     });
+});
+
+Route::prefix('booking')->controller(BookingController::class)
+->middleware(['auth:sanctum','abilities:booking-create,booking-read,booking-update,booking-delete'])->group(function(){
+    Route::post('create', 'create');
+    Route::put('update', 'update');
+    Route::delete('delete', 'delete');
+    Route::get('read', 'read');
+    Route::get('find','find');
 });
